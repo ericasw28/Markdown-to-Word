@@ -93,25 +93,31 @@ if uploaded_files:
                 with col1:
                     custom_variables['title'] = st.text_input(
                         "Title",
-                        value=template_manager.get_default_variables().get('title', 'Untitled Document'),
-                        help="Document title (use {title} in template)"
+                        value=template_manager.get_default_variables().get('title', ''),
+                        placeholder="(uses filename if empty)",
+                        help="Document title - leave empty to use filename"
                     )
                     custom_variables['author'] = st.text_input(
                         "Author",
-                        value=template_manager.get_default_variables().get('author', 'Anonymous'),
-                        help="Author name (use {author} in template)"
+                        value=template_manager.get_default_variables().get('author', ''),
+                        help="Author name (leave empty if not needed)"
+                    )
+                    custom_variables['subtitle'] = st.text_input(
+                        "Subtitle",
+                        value=template_manager.get_default_variables().get('subtitle', ''),
+                        help="Document subtitle (optional)"
                     )
 
                 with col2:
                     custom_variables['company'] = st.text_input(
                         "Company",
-                        value=template_manager.get_default_variables().get('company', ''),
-                        help="Company/organization name (use {company} in template)"
+                        value=template_manager.get_default_variables().get('company', 'Infogene'),
+                        help="Company/organization name"
                     )
                     custom_variables['version'] = st.text_input(
                         "Version",
-                        value=template_manager.get_default_variables().get('version', '1.0'),
-                        help="Document version (use {version} in template)"
+                        value=template_manager.get_default_variables().get('version', '1'),
+                        help="Document version"
                     )
 
                 st.divider()
@@ -187,11 +193,16 @@ if uploaded_files:
                         mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                     else:
                         # Convert to PDF with header/footer settings
+                        # Use filename as title if no title is provided
+                        file_custom_variables = custom_variables.copy() if custom_variables else {}
+                        if not file_custom_variables.get('title'):
+                            file_custom_variables['title'] = file_base_name
+
                         output_buffer = convert_to_pdf(
                             markdown_content,
                             use_header_footer=use_header_footer,
                             header_footer_preset=header_footer_preset,
-                            custom_variables=custom_variables if custom_variables else None
+                            custom_variables=file_custom_variables
                         )
                         output_filename = f"{file_base_name}.pdf"
                         mime_type = "application/pdf"

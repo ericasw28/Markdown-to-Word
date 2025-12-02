@@ -284,6 +284,33 @@ def _format_callout(callout_type: str, title: str, content: List[str]) -> List[s
     return result
 
 
+def fix_consecutive_bold_lines(content: str) -> str:
+    """Add line breaks between consecutive bold label lines
+
+    Fixes issue where lines like:
+    **Label:** text
+    **Label:** text
+
+    Run together in PDF output. Adds explicit line breaks.
+    """
+    lines = content.split('\n')
+    result = []
+    prev_was_bold_label = False
+
+    for line in lines:
+        # Check if line starts with **text:** pattern (bold label)
+        is_bold_label = re.match(r'^\*\*.+:\*\*\s+', line)
+
+        if is_bold_label and prev_was_bold_label:
+            # Add explicit line break before this line
+            result.append('\\')
+
+        result.append(line)
+        prev_was_bold_label = bool(is_bold_label)
+
+    return '\n'.join(result)
+
+
 def preprocess_obsidian_syntax(content: str) -> str:
     """Main preprocessing function that converts all Obsidian syntax
 
@@ -294,6 +321,9 @@ def preprocess_obsidian_syntax(content: str) -> str:
         Preprocessed markdown content compatible with Pandoc
     """
     # Order matters! Process in this sequence:
+
+    # 0. Fix consecutive bold label lines first
+    content = fix_consecutive_bold_lines(content)
 
     # 1. Convert callouts first (they contain other syntax)
     content = convert_callouts(content)

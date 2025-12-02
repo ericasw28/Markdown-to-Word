@@ -3,6 +3,7 @@ Header/Footer Processor
 Handles variable substitution and LaTeX generation for headers/footers
 """
 
+import os
 import re
 from datetime import datetime
 from typing import Dict, Any, Optional, Tuple
@@ -59,7 +60,7 @@ class HeaderFooterProcessor:
 
     def _substitute_variables(self, text: str, variables: Dict[str, str]) -> str:
         """
-        Substitute variables in text
+        Substitute variables in text with recursive substitution support
 
         Args:
             text: Text with {variable} placeholders
@@ -79,14 +80,24 @@ class HeaderFooterProcessor:
             'total': r'\pageref{LastPage}'  # LaTeX command for total pages
         }
 
-        # Merge all variable sources (priority: frontmatter > default > auto)
+        # Merge all variable sources (priority: frontmatter > custom > default > auto)
         all_vars = {**auto_vars, **self.default_variables, **variables, **self.frontmatter_variables}
 
-        # Replace {variable} patterns
+        # Recursive substitution to handle nested variables like {time} -> {current_time}
         result = text
-        for key, value in all_vars.items():
-            pattern = '{' + key + '}'
-            result = result.replace(pattern, str(value))
+        max_iterations = 10  # Prevent infinite loops
+        iteration = 0
+
+        while iteration < max_iterations:
+            old_result = result
+            for key, value in all_vars.items():
+                pattern = '{' + key + '}'
+                result = result.replace(pattern, str(value))
+
+            # If no changes were made, we're done
+            if result == old_result:
+                break
+            iteration += 1
 
         return result
 
@@ -166,35 +177,55 @@ class HeaderFooterProcessor:
         # Handle logo if enabled
         logo_config = self.preset_config.get('logo', {})
         if logo_config.get('enabled', False):
-            logo_path = logo_config.get('path', 'helpers/logo.svg')
+            logo_path = logo_config.get('path', 'config/logo.svg')
             logo_position = logo_config.get('position', 'header_left')
             logo_height = logo_config.get('height', '0.5cm')
             logo_width = logo_config.get('width', '')
 
-            # Generate LaTeX includegraphics command
-            logo_options = []
-            if logo_height:
-                logo_options.append(f'height={logo_height}')
-            if logo_width:
-                logo_options.append(f'width={logo_width}')
+            # Convert relative path to absolute path for LaTeX
+            if not os.path.isabs(logo_path):
+                # Get the project root (3 levels up from this file)
+                project_root = Path(__file__).parent.parent
+                logo_abs_path = (project_root / logo_path).resolve()
+                logo_path = str(logo_abs_path)
 
-            options_str = ','.join(logo_options) if logo_options else ''
-            logo_latex = f'\\includegraphics[{options_str}]{{{logo_path}}}' if options_str else f'\\includegraphics{{{logo_path}}}'
+            # Check if logo is SVG and convert to PNG if needed (LaTeX doesn't support SVG)
+            logo_enabled = True
+            if logo_path.lower().endswith('.svg'):
+                # Try to find a PNG version
+                png_path = logo_path[:-4] + '.png'
+                if os.path.exists(png_path):
+                    logo_path = png_path
+                    print(f"Info: Using PNG version of logo: {png_path}")
+                else:
+                    print(f"Warning: Logo is SVG which LaTeX doesn't support. Please convert {logo_path} to PNG.")
+                    logo_enabled = False
 
-            # Add logo to the appropriate position
-            # If there's already content, add logo before/after with spacing
-            if logo_position == 'header_left':
-                header_left = f'{logo_latex} {header_left}' if header_left else logo_latex
-            elif logo_position == 'header_center':
-                header_center = f'{logo_latex} {header_center}' if header_center else logo_latex
-            elif logo_position == 'header_right':
-                header_right = f'{header_right} {logo_latex}' if header_right else logo_latex
-            elif logo_position == 'footer_left':
-                footer_left = f'{logo_latex} {footer_left}' if footer_left else logo_latex
-            elif logo_position == 'footer_center':
-                footer_center = f'{logo_latex} {footer_center}' if footer_center else logo_latex
-            elif logo_position == 'footer_right':
-                footer_right = f'{footer_right} {logo_latex}' if footer_right else logo_latex
+            if logo_enabled:
+                # Generate LaTeX includegraphics command
+                logo_options = []
+                if logo_height:
+                    logo_options.append(f'height={logo_height}')
+                if logo_width:
+                    logo_options.append(f'width={logo_width}')
+
+                options_str = ','.join(logo_options) if logo_options else ''
+                logo_latex = f'\\includegraphics[{options_str}]{{{logo_path}}}' if options_str else f'\\includegraphics{{{logo_path}}}'
+
+                # Add logo to the appropriate position
+                # If there's already content, add logo before/after with spacing
+                if logo_position == 'header_left':
+                    header_left = f'{logo_latex} {header_left}' if header_left else logo_latex
+                elif logo_position == 'header_center':
+                    header_center = f'{logo_latex} {header_center}' if header_center else logo_latex
+                elif logo_position == 'header_right':
+                    header_right = f'{header_right} {logo_latex}' if header_right else logo_latex
+                elif logo_position == 'footer_left':
+                    footer_left = f'{logo_latex} {footer_left}' if footer_left else logo_latex
+                elif logo_position == 'footer_center':
+                    footer_center = f'{logo_latex} {footer_center}' if footer_center else logo_latex
+                elif logo_position == 'footer_right':
+                    footer_right = f'{footer_right} {logo_latex}' if footer_right else logo_latex
 
         # Get style settings
         separator_line = style.get('separator_line', True)
@@ -206,6 +237,12 @@ class HeaderFooterProcessor:
 \usepackage{fancyhdr}
 \usepackage{lastpage}  % For total page count
 \usepackage{graphicx}  % For logo/image support
+
+% Set header and footer heights to prevent text overflow
+\setlength{\headheight}{28pt}
+\setlength{\headsep}{14pt}
+\setlength{\footskip}{28pt}
+\addtolength{\textheight}{-14pt}
 
 \pagestyle{fancy}
 \fancyhf{}  % Clear all header/footer fields

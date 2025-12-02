@@ -36,9 +36,10 @@ def render_mermaid_to_png(mermaid_code, output_path=None):
         temp_png_path = output_path
 
     try:
-        # Try to render using mmdc (mermaid-cli)
+        # Try to render using mmdc (mermaid-cli) with high scale for better quality
+        # Scale 2 produces 2x resolution for sharper images
         result = subprocess.run(
-            ['mmdc', '-i', temp_mmd_path, '-o', temp_png_path, '-b', 'transparent'],
+            ['mmdc', '-i', temp_mmd_path, '-o', temp_png_path, '-b', 'transparent', '-s', '2'],
             capture_output=True,
             text=True,
             timeout=30

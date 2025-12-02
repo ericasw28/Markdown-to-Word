@@ -23,14 +23,15 @@
         "right": "{author}"
       },
       "logo": {
-        "enabled": false,
+        "enabled": true,
+        "path": "config/logo.png",
         "position": "header_left",
         "height": "0.5cm",
         "width": ""
       },
       "style": {
-        "font_size": "10pt",
-        "separator_line": true
+        "separator_line": true,
+        "font_size": "10pt"
       }
     },
     "academic": {
@@ -150,7 +151,7 @@
       "logo": {
         "enabled": true,
         "position": "header_left",
-        "height": "0.5cm",
+        "height": "0.8cm",
         "width": ""
       },
       "style": {
@@ -160,11 +161,11 @@
     }
   },
   "default_variables": {
-    "title": "Untitled Document",
+    "title": "",
     "subtitle": "",
-    "author": "Anonymous",
-    "company": "",
-    "version": "1.0",
+    "author": "",
+    "company": "Infogene",
+    "version": "1",
     "date": "{current_date}",
     "time": "{current_time}"
   }

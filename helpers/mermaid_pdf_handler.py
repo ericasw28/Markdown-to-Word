@@ -2,6 +2,7 @@
 
 import tempfile
 import os
+from PIL import Image
 from .mermaid_detector import detect_mermaid_blocks
 from .mermaid_renderer import render_mermaid_to_png
 
@@ -36,9 +37,26 @@ def prepare_markdown_with_mermaid_images(markdown_content):
             render_mermaid_to_png(code, output_path=temp_png_path)
             image_files.append(temp_png_path)
 
-            # Replace with markdown image syntax with LaTeX directive to prevent floating
-            # Using \\begin{figure}[H] forces the image to stay in place
-            image_reference = f"\n\n![Mermaid Diagram {diagram_id}]({temp_png_path}){{width=80%}}\n\n"
+            # Check diagram dimensions to apply appropriate sizing
+            # With scale=2 rendering, we need to scale down proportionally
+            # Target: reasonable page width is ~1400px at scale 2
+            img = Image.open(temp_png_path)
+            img_width = img.width
+            img.close()
+
+            # Calculate appropriate percentage based on diagram size
+            # - If width > 1400px: compress to 70% page width
+            # - If width between 800-1400px: use 60% (prevents upscaling while fitting well)
+            # - If width < 800px: use 50% (keeps small diagrams small)
+            if img_width > 1400:
+                size_attr = "{width=70%}"
+            elif img_width > 800:
+                size_attr = "{width=60%}"
+            else:
+                size_attr = "{width=50%}"
+
+            # Replace with markdown image syntax using Pandoc's attribute format
+            image_reference = f"\n\n![Figure {diagram_id + 1}: Mermaid Diagram]({temp_png_path}){size_attr}\n\n"
             modified_content = modified_content[:start] + image_reference + modified_content[end:]
 
         except Exception as e:
