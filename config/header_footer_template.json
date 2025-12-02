@@ -1,5 +1,12 @@
 {
   "current_preset": "professional",
+  "logo": {
+    "enabled": false,
+    "path": "config/logo.svg",
+    "position": "header_left",
+    "height": "0.5cm",
+    "width": ""
+  },
   "presets": {
     "professional": {
       "name": "Professional",
@@ -14,6 +21,12 @@
         "left": "Page {page} of {total}",
         "center": "{company}",
         "right": "{author}"
+      },
+      "logo": {
+        "enabled": false,
+        "position": "header_left",
+        "height": "0.5cm",
+        "width": ""
       },
       "style": {
         "font_size": "10pt",
@@ -34,6 +47,12 @@
         "center": "Page {page} of {total}",
         "right": "{date}"
       },
+      "logo": {
+        "enabled": false,
+        "position": "header_center",
+        "height": "0.5cm",
+        "width": ""
+      },
       "style": {
         "font_size": "10pt",
         "separator_line": true
@@ -52,6 +71,12 @@
         "left": "",
         "center": "{page}",
         "right": ""
+      },
+      "logo": {
+        "enabled": false,
+        "position": "header_right",
+        "height": "0.4cm",
+        "width": ""
       },
       "style": {
         "font_size": "10pt",
@@ -72,6 +97,12 @@
         "center": "Page {page} of {total}",
         "right": "{date} {time}"
       },
+      "logo": {
+        "enabled": false,
+        "position": "footer_right",
+        "height": "0.4cm",
+        "width": ""
+      },
       "style": {
         "font_size": "9pt",
         "separator_line": true
@@ -91,6 +122,12 @@
         "center": "",
         "right": ""
       },
+      "logo": {
+        "enabled": false,
+        "position": "header_left",
+        "height": "0.5cm",
+        "width": ""
+      },
       "style": {
         "font_size": "10pt",
         "separator_line": false
@@ -109,6 +146,12 @@
         "left": "Page {page} of {total}",
         "center": "",
         "right": "{author}"
+      },
+      "logo": {
+        "enabled": true,
+        "position": "header_left",
+        "height": "0.5cm",
+        "width": ""
       },
       "style": {
         "font_size": "10pt",

@@ -163,6 +163,39 @@ class HeaderFooterProcessor:
         footer_center = self._escape_latex(footer_center)
         footer_right = self._escape_latex(footer_right)
 
+        # Handle logo if enabled
+        logo_config = self.preset_config.get('logo', {})
+        if logo_config.get('enabled', False):
+            logo_path = logo_config.get('path', 'helpers/logo.svg')
+            logo_position = logo_config.get('position', 'header_left')
+            logo_height = logo_config.get('height', '0.5cm')
+            logo_width = logo_config.get('width', '')
+
+            # Generate LaTeX includegraphics command
+            logo_options = []
+            if logo_height:
+                logo_options.append(f'height={logo_height}')
+            if logo_width:
+                logo_options.append(f'width={logo_width}')
+
+            options_str = ','.join(logo_options) if logo_options else ''
+            logo_latex = f'\\includegraphics[{options_str}]{{{logo_path}}}' if options_str else f'\\includegraphics{{{logo_path}}}'
+
+            # Add logo to the appropriate position
+            # If there's already content, add logo before/after with spacing
+            if logo_position == 'header_left':
+                header_left = f'{logo_latex} {header_left}' if header_left else logo_latex
+            elif logo_position == 'header_center':
+                header_center = f'{logo_latex} {header_center}' if header_center else logo_latex
+            elif logo_position == 'header_right':
+                header_right = f'{header_right} {logo_latex}' if header_right else logo_latex
+            elif logo_position == 'footer_left':
+                footer_left = f'{logo_latex} {footer_left}' if footer_left else logo_latex
+            elif logo_position == 'footer_center':
+                footer_center = f'{logo_latex} {footer_center}' if footer_center else logo_latex
+            elif logo_position == 'footer_right':
+                footer_right = f'{footer_right} {logo_latex}' if footer_right else logo_latex
+
         # Get style settings
         separator_line = style.get('separator_line', True)
         font_size = style.get('font_size', '10pt')
@@ -172,6 +205,7 @@ class HeaderFooterProcessor:
 % Header and Footer Configuration
 \usepackage{fancyhdr}
 \usepackage{lastpage}  % For total page count
+\usepackage{graphicx}  % For logo/image support
 
 \pagestyle{fancy}
 \fancyhf{}  % Clear all header/footer fields

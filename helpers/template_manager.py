@@ -257,3 +257,71 @@ class TemplateManager:
         except Exception as e:
             print(f"Error importing preset: {e}")
             return False
+
+    def get_logo_config(self, preset_name: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Get logo configuration for a preset
+
+        Args:
+            preset_name: Name of preset. If None, uses current preset.
+
+        Returns:
+            Logo configuration dictionary
+        """
+        preset = self.get_preset(preset_name)
+        return preset.get('logo', {
+            'enabled': False,
+            'path': 'config/logo.svg',
+            'position': 'header_left',
+            'height': '0.5cm',
+            'width': ''
+        })
+
+    def update_logo_config(self, logo_config: Dict[str, Any], preset_name: Optional[str] = None) -> bool:
+        """
+        Update logo configuration for a preset
+
+        Args:
+            logo_config: Logo configuration dictionary
+            preset_name: Name of preset. If None, uses current preset.
+
+        Returns:
+            True if successful
+        """
+        if preset_name is None:
+            preset_name = self.get_current_preset()
+
+        preset = self.get_preset(preset_name)
+        if not preset:
+            return False
+
+        preset['logo'] = logo_config
+        return self.update_preset(preset_name, preset)
+
+    def get_global_logo_config(self) -> Dict[str, Any]:
+        """
+        Get global logo configuration
+
+        Returns:
+            Global logo configuration dictionary
+        """
+        return self.template_data.get('logo', {
+            'enabled': False,
+            'path': 'config/logo.svg',
+            'position': 'header_left',
+            'height': '0.5cm',
+            'width': ''
+        })
+
+    def update_global_logo_config(self, logo_config: Dict[str, Any]) -> bool:
+        """
+        Update global logo configuration
+
+        Args:
+            logo_config: Logo configuration dictionary
+
+        Returns:
+            True if successful
+        """
+        self.template_data['logo'] = logo_config
+        return True

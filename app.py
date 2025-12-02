@@ -114,6 +114,30 @@ if uploaded_files:
                         help="Document version (use {version} in template)"
                     )
 
+                st.divider()
+
+                # Logo configuration
+                st.write("**Logo Settings:**")
+                logo_config = template_manager.get_logo_config(header_footer_preset)
+
+                enable_logo = st.checkbox(
+                    "Include company logo",
+                    value=logo_config.get('enabled', False),
+                    help="Add your company logo to the header/footer"
+                )
+
+                if enable_logo:
+                    st.caption(f"📍 Logo position: `{logo_config.get('position', 'header_left')}` (Edit in Header/Footer Editor page)")
+                    st.caption(f"📏 Logo size: `{logo_config.get('height', '0.5cm')}`")
+
+                    # Update logo config to enable it for this conversion
+                    logo_config['enabled'] = True
+                    template_manager.update_logo_config(logo_config, header_footer_preset)
+                else:
+                    # Temporarily disable logo for this conversion
+                    logo_config['enabled'] = False
+                    template_manager.update_logo_config(logo_config, header_footer_preset)
+
                 # Preview section
                 with st.expander("👁️ Preview Header/Footer", expanded=False):
                     processor = create_processor_from_preset(header_footer_preset, template_manager)
