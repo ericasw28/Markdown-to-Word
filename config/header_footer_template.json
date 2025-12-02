@@ -13,8 +13,8 @@
       "description": "Clean professional layout with title, date, and page numbers",
       "enabled": true,
       "header": {
-        "left": "{title}",
-        "center": "",
+        "left": "",
+        "center": "{title}",
         "right": "{date}"
       },
       "footer": {

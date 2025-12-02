@@ -427,7 +427,7 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
 \definecolor{calloutgray}{RGB}{120, 120, 120}
 
 % Define individual callout environments with proper styling
-\newtcolorbox{calloutNote}[1][]{
+\newtcolorbox{calloutNote}[1]{
     colback=calloutblue!5!white,
     colframe=calloutblue!75!black,
     fonttitle=\bfseries,
@@ -440,7 +440,7 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
     bottom=2mm
 }
 
-\newtcolorbox{calloutInfo}[1][]{
+\newtcolorbox{calloutInfo}[1]{
     colback=calloutblue!5!white,
     colframe=calloutblue!75!black,
     fonttitle=\bfseries,
@@ -453,7 +453,7 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
     bottom=2mm
 }
 
-\newtcolorbox{calloutTodo}[1][]{
+\newtcolorbox{calloutTodo}[1]{
     colback=calloutblue!5!white,
     colframe=calloutblue!75!black,
     fonttitle=\bfseries,
@@ -466,7 +466,7 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
     bottom=2mm
 }
 
-\newtcolorbox{calloutTip}[1][]{
+\newtcolorbox{calloutTip}[1]{
     colback=calloutgreen!5!white,
     colframe=calloutgreen!75!black,
     fonttitle=\bfseries,
@@ -479,7 +479,7 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
     bottom=2mm
 }
 
-\newtcolorbox{calloutSuccess}[1][]{
+\newtcolorbox{calloutSuccess}[1]{
     colback=calloutgreen!5!white,
     colframe=calloutgreen!75!black,
     fonttitle=\bfseries,
@@ -492,7 +492,7 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
     bottom=2mm
 }
 
-\newtcolorbox{calloutQuestion}[1][]{
+\newtcolorbox{calloutQuestion}[1]{
     colback=calloutyellow!5!white,
     colframe=calloutyellow!75!black,
     fonttitle=\bfseries,
@@ -505,7 +505,7 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
     bottom=2mm
 }
 
-\newtcolorbox{calloutWarning}[1][]{
+\newtcolorbox{calloutWarning}[1]{
     colback=calloutorange!5!white,
     colframe=calloutorange!75!black,
     fonttitle=\bfseries,
@@ -518,7 +518,7 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
     bottom=2mm
 }
 
-\newtcolorbox{calloutDanger}[1][]{
+\newtcolorbox{calloutDanger}[1]{
     colback=calloutred!5!white,
     colframe=calloutred!75!black,
     fonttitle=\bfseries,
@@ -531,7 +531,7 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
     bottom=2mm
 }
 
-\newtcolorbox{calloutError}[1][]{
+\newtcolorbox{calloutError}[1]{
     colback=calloutred!5!white,
     colframe=calloutred!75!black,
     fonttitle=\bfseries,
@@ -544,7 +544,7 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
     bottom=2mm
 }
 
-\newtcolorbox{calloutBug}[1][]{
+\newtcolorbox{calloutBug}[1]{
     colback=calloutred!5!white,
     colframe=calloutred!75!black,
     fonttitle=\bfseries,
@@ -557,7 +557,7 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
     bottom=2mm
 }
 
-\newtcolorbox{calloutExample}[1][]{
+\newtcolorbox{calloutExample}[1]{
     colback=calloutpurple!5!white,
     colframe=calloutpurple!75!black,
     fonttitle=\bfseries,
