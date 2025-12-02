@@ -1,0 +1,6 @@
+streamlit
+markdown
+python-docx
+beautifulsoup4
+pypandoc
+Pillow

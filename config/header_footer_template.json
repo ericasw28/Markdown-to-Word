@@ -1,0 +1,128 @@
+{
+  "current_preset": "professional",
+  "presets": {
+    "professional": {
+      "name": "Professional",
+      "description": "Clean professional layout with title, date, and page numbers",
+      "enabled": true,
+      "header": {
+        "left": "{title}",
+        "center": "",
+        "right": "{date}"
+      },
+      "footer": {
+        "left": "Page {page} of {total}",
+        "center": "{company}",
+        "right": "{author}"
+      },
+      "style": {
+        "font_size": "10pt",
+        "separator_line": true
+      }
+    },
+    "academic": {
+      "name": "Academic",
+      "description": "Academic paper style with author and page numbers",
+      "enabled": true,
+      "header": {
+        "left": "{author}",
+        "center": "{title}",
+        "right": ""
+      },
+      "footer": {
+        "left": "",
+        "center": "Page {page} of {total}",
+        "right": "{date}"
+      },
+      "style": {
+        "font_size": "10pt",
+        "separator_line": true
+      }
+    },
+    "minimal": {
+      "name": "Minimal",
+      "description": "Just page numbers, nothing else",
+      "enabled": true,
+      "header": {
+        "left": "",
+        "center": "",
+        "right": ""
+      },
+      "footer": {
+        "left": "",
+        "center": "{page}",
+        "right": ""
+      },
+      "style": {
+        "font_size": "10pt",
+        "separator_line": false
+      }
+    },
+    "detailed": {
+      "name": "Detailed",
+      "description": "Maximum information in headers and footers",
+      "enabled": true,
+      "header": {
+        "left": "{title}",
+        "center": "{subtitle}",
+        "right": "v{version}"
+      },
+      "footer": {
+        "left": "{author} - {company}",
+        "center": "Page {page} of {total}",
+        "right": "{date} {time}"
+      },
+      "style": {
+        "font_size": "9pt",
+        "separator_line": true
+      }
+    },
+    "none": {
+      "name": "None",
+      "description": "No headers or footers",
+      "enabled": false,
+      "header": {
+        "left": "",
+        "center": "",
+        "right": ""
+      },
+      "footer": {
+        "left": "",
+        "center": "",
+        "right": ""
+      },
+      "style": {
+        "font_size": "10pt",
+        "separator_line": false
+      }
+    },
+    "custom": {
+      "name": "Custom",
+      "description": "Your custom header/footer configuration",
+      "enabled": true,
+      "header": {
+        "left": "{title}",
+        "center": "",
+        "right": "{date}"
+      },
+      "footer": {
+        "left": "Page {page} of {total}",
+        "center": "",
+        "right": "{author}"
+      },
+      "style": {
+        "font_size": "10pt",
+        "separator_line": true
+      }
+    }
+  },
+  "default_variables": {
+    "title": "Untitled Document",
+    "subtitle": "",
+    "author": "Anonymous",
+    "company": "",
+    "version": "1.0",
+    "date": "{current_date}",
+    "time": "{current_time}"
+  }
+}
