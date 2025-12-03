@@ -18,7 +18,7 @@
         "right": "{date}"
       },
       "footer": {
-        "left": "Page {page} of {total}",
+        "left": "Page~{page}~of~{total}",
         "center": "{company}",
         "right": "{author}"
       },
@@ -45,7 +45,7 @@
       },
       "footer": {
         "left": "",
-        "center": "Page {page} of {total}",
+        "center": "Page~{page}~of~{total}",
         "right": "{date}"
       },
       "logo": {
@@ -95,7 +95,7 @@
       },
       "footer": {
         "left": "{author} - {company}",
-        "center": "Page {page} of {total}",
+        "center": "Page~{page}~of~{total}",
         "right": "{date} {time}"
       },
       "logo": {
@@ -144,7 +144,7 @@
         "right": "{date}"
       },
       "footer": {
-        "left": "Page {page} of {total}",
+        "left": "Page~{page}~of~{total}",
         "center": "",
         "right": "{author}"
       },

@@ -1,6 +1,7 @@
 import streamlit as st
 import os
-from helpers import convert_to_docx, convert_to_pdf
+from helpers.docx_converter import convert_to_docx
+from helpers.pdf_converter import convert_to_pdf
 from helpers.template_manager import TemplateManager
 from helpers.header_footer_processor import create_processor_from_preset
 

@@ -107,7 +107,8 @@ def convert_to_pdf(markdown_content, render_mermaid=True, obsidian_mode=True,
                 '--variable=geometry:margin=0.75in',
                 '--variable=colorlinks:true',
                 '--include-in-header=' + temp_header_path,
-                '--syntax-highlighting=tango'
+                '--columns=80'  # Help Pandoc calculate better column widths
+                # Note: No explicit syntax highlighting flag - Pandoc uses default
             ]
         )
 

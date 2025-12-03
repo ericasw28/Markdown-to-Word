@@ -76,8 +76,8 @@ class HeaderFooterProcessor:
         auto_vars = {
             'current_date': datetime.now().strftime('%Y-%m-%d'),
             'current_time': datetime.now().strftime('%H:%M'),
-            'page': r'\thepage',  # LaTeX command for current page
-            'total': r'\pageref{LastPage}'  # LaTeX command for total pages
+            'page': r'\mbox{\thepage}',  # LaTeX command for current page (in mbox to prevent breaking)
+            'total': r'\mbox{\pageref{LastPage}}'  # LaTeX command for total pages (in mbox to prevent breaking)
         }
 
         # Merge all variable sources (priority: frontmatter > custom > default > auto)
@@ -252,22 +252,22 @@ class HeaderFooterProcessor:
         # Add header configuration
         latex_code += f"% Header\n"
         if header_left:
-            latex_code += f"\\fancyhead[L]{{{header_left}}}\n"
+            latex_code += f"\\fancyhead[L]{{\\mbox{{{header_left}}}}}\n"
         if header_center:
-            latex_code += f"\\fancyhead[C]{{{header_center}}}\n"
+            latex_code += f"\\fancyhead[C]{{\\mbox{{{header_center}}}}}\n"
         if header_right:
-            latex_code += f"\\fancyhead[R]{{{header_right}}}\n"
+            latex_code += f"\\fancyhead[R]{{\\mbox{{{header_right}}}}}\n"
 
         latex_code += "\n"
 
         # Add footer configuration
         latex_code += f"% Footer\n"
         if footer_left:
-            latex_code += f"\\fancyfoot[L]{{{footer_left}}}\n"
+            latex_code += f"\\fancyfoot[L]{{\\mbox{{{footer_left}}}}}\n"
         if footer_center:
-            latex_code += f"\\fancyfoot[C]{{{footer_center}}}\n"
+            latex_code += f"\\fancyfoot[C]{{\\mbox{{{footer_center}}}}}\n"
         if footer_right:
-            latex_code += f"\\fancyfoot[R]{{{footer_right}}}\n"
+            latex_code += f"\\fancyfoot[R]{{\\mbox{{{footer_right}}}}}\n"
 
         latex_code += "\n"
 

@@ -37,23 +37,26 @@ def prepare_markdown_with_mermaid_images(markdown_content):
             render_mermaid_to_png(code, output_path=temp_png_path)
             image_files.append(temp_png_path)
 
-            # Check diagram dimensions to apply appropriate sizing
-            # With scale=2 rendering, we need to scale down proportionally
-            # Target: reasonable page width is ~1400px at scale 2
+            # Check diagram dimensions to prevent upscaling
+            # With scale=2 rendering (2x resolution), images are 2x their natural size
+            # Strategy: Display at half the pixel width (natural size), with max constraints
             img = Image.open(temp_png_path)
             img_width = img.width
             img.close()
 
-            # Calculate appropriate percentage based on diagram size
-            # - If width > 1400px: compress to 70% page width
-            # - If width between 800-1400px: use 60% (prevents upscaling while fitting well)
-            # - If width < 800px: use 50% (keeps small diagrams small)
-            if img_width > 1400:
-                size_attr = "{width=70%}"
-            elif img_width > 800:
-                size_attr = "{width=60%}"
+            # Calculate the natural display size (scale 2 means divide by 2)
+            # Then convert to points for LaTeX (assuming 96 DPI: 1px = 0.75pt)
+            natural_width_pt = (img_width / 2) * 0.75
+
+            # PDF text width is ~504pt (7 inches at 72pt/inch)
+            max_width_pt = 504 * 0.85  # Use max 85% of text width
+
+            if natural_width_pt > max_width_pt:
+                # Large diagram - scale down to fit page (use percentage)
+                size_attr = "{width=85%}"
             else:
-                size_attr = "{width=50%}"
+                # Small/medium diagram - use natural size in points (prevents upscaling)
+                size_attr = f"{{width={natural_width_pt:.0f}pt}}"
 
             # Replace with markdown image syntax using Pandoc's attribute format
             image_reference = f"\n\n![Figure {diagram_id + 1}: Mermaid Diagram]({temp_png_path}){size_attr}\n\n"

@@ -6,6 +6,7 @@ that can be properly rendered by Pandoc.
 
 import re
 from typing import Tuple, List
+from .table_width_optimizer import optimize_table_widths
 
 
 # Callout type mapping to colors and icons
@@ -311,6 +312,107 @@ def fix_consecutive_bold_lines(content: str) -> str:
     return '\n'.join(result)
 
 
+def fix_list_blank_lines(content: str) -> str:
+    """Ensure blank lines before bullet/numbered lists for proper Pandoc parsing
+
+    Pandoc requires blank lines before lists to recognize them as list environments.
+    This function automatically adds missing blank lines.
+
+    Args:
+        content: Markdown content
+
+    Returns:
+        Content with blank lines added before lists where needed
+    """
+    lines = content.split('\n')
+    result = []
+
+    for i, line in enumerate(lines):
+        # Check if current line starts a list (bullet or numbered)
+        is_list_item = re.match(r'^(\s*)[-*+]\s+', line) or re.match(r'^(\s*)\d+\.\s+', line)
+
+        if is_list_item and i > 0:
+            prev_line = lines[i - 1]
+            # Check if previous line is not blank and not a list item
+            prev_is_blank = prev_line.strip() == ''
+            prev_is_list = re.match(r'^(\s*)[-*+]\s+', prev_line) or re.match(r'^(\s*)\d+\.\s+', prev_line)
+
+            # If previous line has content and is not a list item, add blank line
+            if not prev_is_blank and not prev_is_list:
+                result.append('')  # Add blank line
+
+        result.append(line)
+
+    return '\n'.join(result)
+
+
+def wrap_code_block_lines(content: str, max_width: int = 100) -> str:
+    """Wrap long lines in code blocks to prevent PDF overflow.
+
+    This preprocesses markdown content to wrap lines in code blocks that exceed
+    max_width characters. Lines are wrapped at spaces to avoid breaking mid-word.
+
+    Args:
+        content: Markdown content with code blocks
+        max_width: Maximum line width in characters (default 100)
+
+    Returns:
+        Markdown content with wrapped code block lines
+    """
+    import textwrap
+
+    lines = content.split('\n')
+    result = []
+    in_code_block = False
+    code_fence = ''
+
+    for line in lines:
+        # Check for code block fences (``` or ~~~)
+        if line.strip().startswith('```') or line.strip().startswith('~~~'):
+            if not in_code_block:
+                # Starting a code block
+                in_code_block = True
+                code_fence = line.strip()[:3]
+            else:
+                # Ending a code block
+                in_code_block = False
+                code_fence = ''
+            result.append(line)
+            continue
+
+        # If we're in a code block and the line is too long, wrap it
+        if in_code_block and len(line) > max_width:
+            # Preserve leading whitespace
+            leading_space = len(line) - len(line.lstrip())
+            indent = line[:leading_space]
+            content_part = line[leading_space:]
+
+            # Wrap the content part
+            # Use break_long_words=False to avoid breaking in the middle of words
+            # Use break_on_hyphens=False to keep hyphenated words together
+            wrapped = textwrap.wrap(
+                content_part,
+                width=max_width - leading_space,
+                break_long_words=False,
+                break_on_hyphens=False,
+                replace_whitespace=False,
+                drop_whitespace=False
+            )
+
+            # If wrapping produced multiple lines, add them with original indentation
+            if wrapped:
+                for wrapped_line in wrapped:
+                    result.append(indent + wrapped_line)
+            else:
+                # If wrapping failed (e.g., single word longer than max_width), keep original
+                result.append(line)
+        else:
+            # Not in code block or line is short enough
+            result.append(line)
+
+    return '\n'.join(result)
+
+
 def preprocess_obsidian_syntax(content: str) -> str:
     """Main preprocessing function that converts all Obsidian syntax
 
@@ -322,20 +424,29 @@ def preprocess_obsidian_syntax(content: str) -> str:
     """
     # Order matters! Process in this sequence:
 
-    # 0. Fix consecutive bold label lines first
+    # 0. Optimize table column widths (do this first, before other processing)
+    content = optimize_table_widths(content)
+
+    # 1. Wrap long lines in code blocks to prevent PDF overflow
+    content = wrap_code_block_lines(content)
+
+    # 2. Fix consecutive bold label lines first
     content = fix_consecutive_bold_lines(content)
 
-    # 1. Convert callouts first (they contain other syntax)
+    # 3. Fix missing blank lines before lists (for proper Pandoc parsing)
+    content = fix_list_blank_lines(content)
+
+    # 4. Convert callouts (they contain other syntax)
     content = convert_callouts(content)
 
-    # 2. Convert Obsidian-specific links and embeds
+    # 5. Convert Obsidian-specific links and embeds
     content = convert_obsidian_images(content)
     content = convert_wikilinks(content)
 
-    # 3. Convert extended checkboxes
+    # 6. Convert extended checkboxes
     content = convert_extended_checkboxes(content)
 
-    # 4. Convert text formatting
+    # 7. Convert text formatting
     content = convert_highlighting(content)
     content = convert_underline(content)
 
@@ -355,24 +466,27 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
     if use_lualatex:
         engine_specific = r'''
 % Obsidian formatting support for LuaLaTeX
+\usepackage{etoolbox}      % For code hooks
 \usepackage{xcolor}        % For colors
 \usepackage{tcolorbox}     % For callout boxes
 \usepackage{fontawesome5}  % For icons (if available)
 \usepackage{enumitem}      % For better list control
 \usepackage{fontspec}      % For font configuration
+\usepackage{ulem}          % For underline support
 
-% Configure fonts with emoji support
-\setmainfont{Helvetica Neue}
-\newfontfamily\emojifont{Apple Color Emoji}[Renderer=Harfbuzz]
-\usepackage{newunicodechar}
-
-% Map emoji unicode ranges to use emoji font
+% Configure fallback font for emoji support
 \directlua{
   luaotfload.add_fallback("emojifallback", {
     "Apple Color Emoji:mode=harf"
   })
 }
+
+% Set main font with emoji fallback
 \setmainfont{Helvetica Neue}[RawFeature={fallback=emojifallback}]
+
+% Use default monospace font for better line breaking in code blocks
+% Custom fonts can interfere with fvextra's character width calculations
+\setmonofont{Latin Modern Mono}[Scale=0.9]
 
 % Define custom highlight command using colorbox (replacement for soul's \hl)
 \definecolor{highlightyellow}{RGB}{255, 255, 0}
@@ -382,11 +496,13 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
     else:
         engine_specific = r'''
 % Obsidian formatting support
+\usepackage{etoolbox}      % For code hooks
 \usepackage{soul}          % For highlighting
 \usepackage{xcolor}        % For colors
 \usepackage{tcolorbox}     % For callout boxes
 \usepackage{fontawesome5}  % For icons (if available)
 \usepackage{enumitem}      % For better list control
+\usepackage{ulem}          % For underline support
 
 % Define highlight color
 \sethlcolor{yellow}
@@ -394,6 +510,85 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
 
     # Common LaTeX code for both engines
     common_header = r'''
+% Enable professional typography and reasonable text wrapping
+\usepackage{microtype}
+\usepackage{parskip}
+
+% Moderate line breaking settings (code blocks are pre-wrapped during preprocessing)
+\setlength{\emergencystretch}{3em}
+\tolerance=2000
+\hbadness=2000
+
+% Note: Code blocks are automatically wrapped during preprocessing at ~100 characters
+% so aggressive LaTeX line breaking is not needed and would break table formatting
+
+% Code block styling with light gray background (using framed package like quotes)
+\definecolor{codebg}{gray}{0.95}
+
+% Redefine verbatim to add gray background
+\let\oldverbatim\verbatim
+\let\endoldverbatim\endverbatim
+\renewenvironment{verbatim}{%
+  \def\FrameCommand{%
+    \fboxsep=8pt\colorbox{codebg}%
+  }%
+  \MakeFramed{\advance\hsize-\width\FrameRestore}%
+  \oldverbatim
+}{%
+  \endoldverbatim
+  \endMakeFramed
+}
+
+% Redefine Highlighting (syntax-highlighted code) to add gray background if it exists
+\AtBeginDocument{%
+  \ifcsname Highlighting\endcsname
+    \let\oldHighlighting\Highlighting
+    \let\endoldHighlighting\endHighlighting
+    \renewenvironment{Highlighting}{%
+      \def\FrameCommand{%
+        \fboxsep=8pt\colorbox{codebg}%
+      }%
+      \MakeFramed{\advance\hsize-\width\FrameRestore}%
+      \oldHighlighting
+    }{%
+      \endoldHighlighting
+      \endMakeFramed
+    }%
+  \fi
+}
+
+% Enhanced table support with smart column widths
+\usepackage{booktabs}       % Professional table styling
+\usepackage{tabularx}       % Smart column width distribution
+\usepackage{array}          % Enhanced column formatting
+\usepackage{longtable}      % Multi-page tables
+
+% Configure longtable to use content-based column widths
+% LTleft and LTright control horizontal positioning
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+
+% Allow tables to use full text width
+\setlength{\tabcolsep}{6pt}
+
+% Configure blockquote styling
+\usepackage{xcolor}
+\usepackage{framed}
+\definecolor{quotebg}{gray}{0.95}
+\definecolor{quotebar}{gray}{0.4}
+
+\renewenvironment{quote}{%
+  \def\FrameCommand{%
+    {\color{quotebar}\vrule width 3pt}%
+    \hspace{10pt}%
+    \fboxsep=10pt\colorbox{quotebg}%
+  }%
+  \MakeFramed{\advance\hsize-\width\FrameRestore}%
+  \itshape
+}{%
+  \endMakeFramed
+}
+
 % Fix "too deeply nested" error by increasing list nesting depth
 \setlistdepth{9}
 \renewlist{itemize}{itemize}{9}
