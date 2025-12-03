@@ -90,6 +90,157 @@ def parse_pipe_table(table_text: str) -> Tuple[List[str], List[List[str]]]:
     return headers, data_rows
 
 
+def markdown_to_latex(text: str) -> str:
+    """Convert markdown formatting to LaTeX equivalents
+
+    Args:
+        text: Text with markdown formatting
+
+    Returns:
+        Text with LaTeX formatting
+    """
+    import re
+
+    # Handle bold + italic: ***text*** or ___text___
+    text = re.sub(r'\*\*\*(.+?)\*\*\*', r'\\textbf{\\textit{\1}}', text)
+    text = re.sub(r'___(.+?)___', r'\\textbf{\\textit{\1}}', text)
+
+    # Handle bold: **text** or __text__
+    text = re.sub(r'\*\*(.+?)\*\*', r'\\textbf{\1}', text)
+    text = re.sub(r'__(.+?)__', r'\\textbf{\1}', text)
+
+    # Handle italic: *text* or _text_ (but not in middle of words)
+    text = re.sub(r'(?<!\w)\*(.+?)\*(?!\w)', r'\\textit{\1}', text)
+    text = re.sub(r'(?<!\w)_(.+?)_(?!\w)', r'\\textit{\1}', text)
+
+    # Handle inline code: `code`
+    text = re.sub(r'`(.+?)`', r'\\texttt{\1}', text)
+
+    return text
+
+
+def escape_latex_chars(text: str) -> str:
+    """Escape special LaTeX characters in text
+
+    Args:
+        text: Text that may contain special LaTeX characters
+
+    Returns:
+        Text with LaTeX special characters escaped
+    """
+    # Order matters: backslash must be first
+    replacements = [
+        ('\\', r'\textbackslash{}'),
+        ('&', r'\&'),
+        ('%', r'\%'),
+        ('$', r'\$'),
+        ('#', r'\#'),
+        ('_', r'\_'),
+        ('{', r'\{'),
+        ('}', r'\}'),
+        ('~', r'\textasciitilde{}'),
+        ('^', r'\textasciicircum{}'),
+    ]
+
+    for old, new in replacements:
+        text = text.replace(old, new)
+
+    return text
+
+
+def process_cell_content(text: str) -> str:
+    """Process table cell content: escape special chars, then convert markdown to LaTeX
+
+    Args:
+        text: Raw cell content with potential markdown formatting
+
+    Returns:
+        LaTeX-ready cell content
+    """
+    import re
+
+    # Strategy: Process markdown patterns one by one, escaping content before wrapping
+
+    # Define special char escaping (excluding markdown markers)
+    def escape_special_chars(s: str) -> str:
+        """Escape LaTeX special characters except markdown markers"""
+        replacements = [
+            ('&', r'\&'),
+            ('%', r'\%'),
+            ('$', r'\$'),
+            ('#', r'\#'),
+            ('{', r'\{'),
+            ('}', r'\}'),
+            ('~', r'\textasciitilde{}'),
+            ('^', r'\textasciicircum{}'),
+        ]
+        for old, new in replacements:
+            s = s.replace(old, new)
+        return s
+
+    # Process bold + italic: ***text*** or ___text___
+    def process_bold_italic(match):
+        content = escape_special_chars(match.group(1))
+        # Escape underscores for this specific case
+        content = content.replace('_', r'\_')
+        return f'\\textbf{{\\textit{{{content}}}}}'
+
+    text = re.sub(r'\*\*\*(.+?)\*\*\*', process_bold_italic, text)
+    text = re.sub(r'___(.+?)___', process_bold_italic, text)
+
+    # Process bold: **text** or __text__
+    def process_bold(match):
+        content = escape_special_chars(match.group(1))
+        # Escape underscores for this specific case
+        content = content.replace('_', r'\_')
+        return f'\\textbf{{{content}}}'
+
+    text = re.sub(r'\*\*(.+?)\*\*', process_bold, text)
+    text = re.sub(r'__(.+?)__', process_bold, text)
+
+    # Process italic: *text* or _text_
+    def process_italic(match):
+        content = escape_special_chars(match.group(1))
+        # Escape underscores for this specific case
+        content = content.replace('_', r'\_')
+        return f'\\textit{{{content}}}'
+
+    text = re.sub(r'(?<!\w)\*(.+?)\*(?!\w)', process_italic, text)
+    text = re.sub(r'(?<!\w)_(.+?)_(?!\w)', process_italic, text)
+
+    # Process inline code: `code`
+    def process_code(match):
+        content = escape_special_chars(match.group(1))
+        # Escape underscores for code
+        content = content.replace('_', r'\_')
+        return f'\\texttt{{{content}}}'
+
+    text = re.sub(r'`(.+?)`', process_code, text)
+
+    # Now we need to escape remaining special chars, but NOT the ones in our LaTeX commands
+    # Protect all LaTeX commands we just created
+    import re as re_module
+    latex_commands = []
+
+    def protect_latex(match):
+        latex_commands.append(match.group(0))
+        return f'<<<LATEX{len(latex_commands)-1}>>>'
+
+    # Protect all \textbf{...}, \textit{...}, \texttt{...} patterns (including nested ones)
+    # Use a more robust pattern that handles nested braces
+    text = re_module.sub(r'\\text(?:bf|it|tt)\{(?:[^{}]|\\text(?:bf|it|tt)\{[^{}]*\})*\}', protect_latex, text)
+
+    # Now escape any remaining special characters
+    text = escape_special_chars(text)
+    text = text.replace('_', r'\_')
+
+    # Restore LaTeX commands
+    for i, cmd in enumerate(latex_commands):
+        text = text.replace(f'<<<LATEX{i}>>>', cmd)
+
+    return text
+
+
 def convert_table_to_latex(headers: List[str], rows: List[List[str]], widths: List[float]) -> str:
     """Convert table data to LaTeX longtable with specified widths
 
@@ -104,11 +255,15 @@ def convert_table_to_latex(headers: List[str], rows: List[List[str]], widths: Li
     if not headers or not widths:
         return ""
 
+    # Use 95% of textwidth to leave margins and prevent overflow
+    total_width_ratio = 0.95
+
     # Calculate actual widths in terms of textwidth
     col_specs = []
     for width in widths:
         # Use p{width} for paragraph columns with specified width
-        col_specs.append(f'p{{{width:.3f}\\textwidth}}')
+        adjusted_width = width * total_width_ratio
+        col_specs.append(f'p{{{adjusted_width:.3f}\\textwidth}}')
 
     col_spec_str = '|'.join(col_specs)
 
@@ -120,15 +275,17 @@ def convert_table_to_latex(headers: List[str], rows: List[List[str]], widths: Li
         '\\toprule',
     ]
 
-    # Add header row
-    header_str = ' & '.join(headers) + ' \\\\'
+    # Add header row (process markdown and escape LaTeX special characters)
+    processed_headers = [process_cell_content(h) for h in headers]
+    header_str = ' & '.join(processed_headers) + ' \\\\'
     latex_lines.append(header_str)
     latex_lines.append('\\midrule')
     latex_lines.append('\\endhead')
 
-    # Add data rows
+    # Add data rows (process markdown and escape LaTeX special characters)
     for row in rows:
-        row_str = ' & '.join(row) + ' \\\\'
+        processed_row = [process_cell_content(cell) for cell in row]
+        row_str = ' & '.join(processed_row) + ' \\\\'
         latex_lines.append(row_str)
 
     # Close table
