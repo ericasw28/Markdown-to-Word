@@ -8,10 +8,28 @@ from bs4 import BeautifulSoup
 from io import BytesIO
 from .text_formatter import add_formatted_text
 from .mermaid_docx_handler import extract_mermaid_and_render
+from .page_break_handler import convert_page_breaks_to_placeholder
+from .obsidian_to_html import preprocess_obsidian_for_html
 
 
-def convert_to_docx(markdown_content, render_mermaid=True):
-    """Convert Markdown content to DOCX format"""
+def convert_to_docx(markdown_content, render_mermaid=True, obsidian_mode=True):
+    """Convert Markdown content to DOCX format
+
+    Args:
+        markdown_content: The markdown content to convert
+        render_mermaid: Whether to render Mermaid diagrams (default: True)
+        obsidian_mode: Whether to preprocess Obsidian syntax (default: True)
+
+    Returns:
+        BytesIO buffer containing the DOCX document
+    """
+    # Preprocess Obsidian syntax if enabled (like PDF converter)
+    if obsidian_mode:
+        # Note: We use HTML-specific preprocessing for DOCX output
+        # (unlike PDF which uses LaTeX-based preprocessing)
+        # This ensures callouts, checkboxes, etc. render properly in Word
+        markdown_content = preprocess_obsidian_for_html(markdown_content)
+
     # Handle Mermaid diagrams if enabled
     diagram_images = {}
     if render_mermaid:
@@ -21,6 +39,10 @@ def convert_to_docx(markdown_content, render_mermaid=True):
                 print(f"Rendered {len(diagram_images)} Mermaid diagrams")
         except Exception as e:
             print(f"Warning: Mermaid rendering disabled due to error: {e}")
+
+    # Preprocess page break markers before HTML conversion
+    # Using shared module for consistency with PDF converter
+    markdown_content = convert_page_breaks_to_placeholder(markdown_content)
 
     # Convert markdown to HTML first
     html_content = markdown.markdown(
@@ -49,9 +71,17 @@ def convert_to_docx(markdown_content, render_mermaid=True):
             # Reset list tracking after heading
             prev_list_type = None
         elif element.name == 'p':
+            # Check if this paragraph contains a page break marker
+            text = element.get_text().strip()
+            if text == '|||PAGEBREAK|||':
+                # Insert page break
+                doc.add_page_break()
+                # Reset list tracking after page break
+                prev_list_type = None
+                continue
+
             # Check if this paragraph contains a Mermaid placeholder
             # Get all text including from child elements like <strong>
-            text = element.get_text().strip()
             match = re.search(r'MERMAID_DIAGRAM_(\d+)', text)  # Match without underscores too
             if match and diagram_images:
                 # This is a Mermaid placeholder - insert image directly

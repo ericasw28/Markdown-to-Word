@@ -7,6 +7,7 @@ that can be properly rendered by Pandoc.
 import re
 from typing import Tuple, List
 from .table_width_optimizer import optimize_table_widths
+from .page_break_handler import convert_page_breaks_to_latex
 
 
 # Callout type mapping to colors and icons
@@ -346,6 +347,32 @@ def fix_list_blank_lines(content: str) -> str:
     return '\n'.join(result)
 
 
+# Page break conversion is now handled by shared page_break_handler module
+# This function is kept for backward compatibility
+def convert_page_break_markers(content: str) -> str:
+    """Convert page break markers to LaTeX page breaks
+
+    NOTE: This function now delegates to the shared page_break_handler module
+    for consistent behavior across PDF and DOCX converters.
+
+    Supports multiple page break syntaxes:
+    1. HTML comments: <!-- pagebreak -->, <!-- page-break -->, <!-- newpage -->
+    2. Raw LaTeX: \newpage (already supported by Pandoc, but normalized here)
+    3. Horizontal rules: --- (only when NOT in code blocks or YAML frontmatter)
+
+    This function is code-block aware and won't convert markers inside:
+    - Fenced code blocks (```)
+    - YAML frontmatter
+
+    Args:
+        content: Markdown content
+
+    Returns:
+        Content with page break markers converted to \newpage
+    """
+    return convert_page_breaks_to_latex(content)
+
+
 def wrap_code_block_lines(content: str, max_width: int = 100) -> str:
     """Wrap long lines in code blocks to prevent PDF overflow.
 
@@ -430,23 +457,27 @@ def preprocess_obsidian_syntax(content: str) -> str:
     # 1. Wrap long lines in code blocks to prevent PDF overflow
     content = wrap_code_block_lines(content)
 
-    # 2. Fix consecutive bold label lines first
+    # 2. Convert page break markers (HTML comments, \newpage, ---) to \newpage
+    # Do this early but after code block wrapping to preserve code block tracking
+    content = convert_page_break_markers(content)
+
+    # 3. Fix consecutive bold label lines first
     content = fix_consecutive_bold_lines(content)
 
-    # 3. Fix missing blank lines before lists (for proper Pandoc parsing)
+    # 4. Fix missing blank lines before lists (for proper Pandoc parsing)
     content = fix_list_blank_lines(content)
 
-    # 4. Convert callouts (they contain other syntax)
+    # 5. Convert callouts (they contain other syntax)
     content = convert_callouts(content)
 
-    # 5. Convert Obsidian-specific links and embeds
+    # 6. Convert Obsidian-specific links and embeds
     content = convert_obsidian_images(content)
     content = convert_wikilinks(content)
 
-    # 6. Convert extended checkboxes
+    # 7. Convert extended checkboxes
     content = convert_extended_checkboxes(content)
 
-    # 7. Convert text formatting
+    # 8. Convert text formatting
     content = convert_highlighting(content)
     content = convert_underline(content)
 
