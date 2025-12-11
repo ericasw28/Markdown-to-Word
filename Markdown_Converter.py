@@ -1,12 +1,13 @@
 import streamlit as st
 import os
+import base64
 from helpers.docx_converter import convert_to_docx
 from helpers.pdf_converter import convert_to_pdf
 from helpers.template_manager import TemplateManager
 from helpers.header_footer_processor import create_processor_from_preset
 
 # Page configuration
-st.set_page_config(page_title="Markdown Converter", page_icon="📄", layout="centered")
+st.set_page_config(page_title="Markdown Converter", page_icon="📄", layout="wide")
 
 # Title and description
 st.title("📄 Markdown to DOCX/PDF Converter")
@@ -217,6 +218,25 @@ if uploaded_files:
                         use_container_width=True
                     )
                     st.success(f"✅ {uploaded_file.name} converted successfully!")
+
+                    # PDF Preview (only for PDF files)
+                    if "PDF" in output_format:
+                        # Store PDF in session state for persistence
+                        output_buffer.seek(0)
+                        pdf_key = f"pdf_data_{uploaded_file.name}"
+
+                        # Only encode if not already in session state
+                        if pdf_key not in st.session_state:
+                            st.session_state[pdf_key] = base64.b64encode(output_buffer.read()).decode('utf-8')
+
+                        output_buffer.seek(0)  # Reset buffer for download
+
+                        with st.expander("👁️ Preview PDF", expanded=False):
+                            # Simple PDF viewer - basic iframe with base64 data
+                            base64_pdf = st.session_state[pdf_key]
+
+                            pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800px" style="border: 1px solid #ddd;"></iframe>'
+                            st.markdown(pdf_display, unsafe_allow_html=True)
 
                 except Exception as e:
                     st.error(f"❌ Error converting {uploaded_file.name}: {str(e)}")

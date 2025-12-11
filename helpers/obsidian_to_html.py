@@ -204,6 +204,36 @@ def convert_underline_html(content: str) -> str:
     return content
 
 
+def fix_consecutive_bold_lines(content: str) -> str:
+    """Add line breaks between consecutive bold lines
+
+    Fixes issue where consecutive lines starting with bold text
+    run together in output. Adds explicit line breaks.
+
+    Examples:
+    - **Label:** text
+    - **En tant que** text
+    - **Bold only**
+    """
+    lines = content.split('\n')
+    result = []
+    prev_was_bold_start = False
+
+    for line in lines:
+        # Check if line starts with **text** pattern (any bold text at start)
+        # Matches: **anything** (with or without text after)
+        is_bold_start = re.match(r'^\*\*.+?\*\*', line)
+
+        if is_bold_start and prev_was_bold_start:
+            # Add explicit line break for HTML (use <br>)
+            result.append('<br>')
+
+        result.append(line)
+        prev_was_bold_start = bool(is_bold_start)
+
+    return '\n'.join(result)
+
+
 def fix_list_blank_lines(content: str) -> str:
     """Ensure blank lines before bullet/numbered lists
 
@@ -247,20 +277,23 @@ def preprocess_obsidian_for_html(content: str) -> str:
     # 0. Optimize table column widths
     content = optimize_table_widths(content)
 
-    # 1. Fix missing blank lines before lists
+    # 1. Fix consecutive bold lines first (before other processing)
+    content = fix_consecutive_bold_lines(content)
+
+    # 2. Fix missing blank lines before lists
     content = fix_list_blank_lines(content)
 
-    # 2. Convert callouts to blockquotes
+    # 3. Convert callouts to blockquotes
     content = convert_callouts_html(content)
 
-    # 3. Convert Obsidian-specific links and embeds
+    # 4. Convert Obsidian-specific links and embeds
     content = convert_obsidian_images_html(content)
     content = convert_wikilinks_html(content)
 
-    # 4. Convert extended checkboxes
+    # 5. Convert extended checkboxes
     content = convert_extended_checkboxes_html(content)
 
-    # 5. Convert text formatting (HTML-safe)
+    # 6. Convert text formatting (HTML-safe)
     content = convert_highlighting_html(content)
     content = convert_underline_html(content)
 

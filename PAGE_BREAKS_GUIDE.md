@@ -4,7 +4,7 @@ This document explains how to insert page breaks in your Markdown documents for 
 
 ## Supported Page Break Syntaxes
 
-The converter supports **three different ways** to insert page breaks, giving you flexibility based on your workflow:
+The converter supports **two different ways** to insert page breaks:
 
 ### 1. HTML Comments (Recommended for Obsidian) ✅
 
@@ -18,11 +18,12 @@ Content on page 2
 
 **Variants supported** (case-insensitive):
 
-- `<!-- pagebreak -->`
-- `<!-- page-break -->`
-- `<!-- page_break -->`
+- `<!-- pagebreak -->` (no separator)
+- `<!-- page-break -->` (hyphen)
+- `<!-- page_break -->` (underscore)
+- `<!-- page break -->` (space)
 - `<!-- newpage -->`
-- `<!-- PAGEBREAK -->` (any capitalization)
+- `<!-- PAGEBREAK -->` (any capitalization works)
 
 **Pros:**
 
@@ -46,34 +47,28 @@ Content on page 2
 - Familiar to academic users
 - Direct and explicit
 
-### 3. Horizontal Rules ✅
+## Important: Horizontal Rules Are NOT Page Breaks
+
+**⚠️ Note:** Markdown horizontal rules (`---`, `***`, `___`) are rendered as horizontal lines and do NOT create page breaks.
 
 ```markdown
 Content on page 1
 
 ---
 
-Content on page 2
+This will be on the same page with a horizontal line above it
 ```
 
-**Also supports:**
+If you need both a visual separator AND a page break, use them together:
 
-- `---` (three or more hyphens)
-- `***` (three or more asterisks)
-- `___` (three or more underscores)
+```markdown
+Content on page 1
 
-**Pros:**
+---
+\newpage
 
-- Quick to type
-- Standard Markdown syntax
-- Visual separator in source
-
-**⚠️ Smart Detection:**
-The converter is **code-block aware** and will NOT convert horizontal rules inside:
-
-- Fenced code blocks (```)
-- YAML frontmatter
-- This prevents conflicts with legitimate uses of `---`
+Content on page 2 with horizontal line at the top of the previous page
+```
 
 ## Examples
 
@@ -101,21 +96,21 @@ First chapter content here.
 
 Second chapter content.
 
----
+\newpage
 
 # Conclusion
 
 Final thoughts.
 ```
 
-### Using in Code Blocks (Safe)
+### Using Page Breaks with Code Blocks
 
 ```markdown
 Here's some Python code:
 
 ```python
 def example():
-    # This --- won't trigger a page break
+    # Code blocks are never converted to page breaks
     separator = "---"
     return separator
 ```
@@ -123,8 +118,7 @@ def example():
 <!-- pagebreak -->
 
 Next page content.
-
-```text
+```
 
 ### YAML Frontmatter (Safe)
 
@@ -134,9 +128,9 @@ title: Document Title
 date: 2025-12-05
 ---
 
-The --- above won't trigger a page break!
+The YAML frontmatter above is protected and never converted to page breaks.
 
-<!-- pagebreak -->
+\newpage
 
 New page starts here.
 ```
@@ -148,32 +142,31 @@ New page starts here.
 | **PDF** | ✅ Fully Supported | Uses LaTeX `\newpage` |
 | **DOCX** | ✅ Fully Supported | Uses Word page breaks |
 
-Both formats support all three syntax types identically.
+Both formats support both syntax types identically.
 
 ## Best Practices
 
 1. **Choose one style and be consistent** - Pick the syntax that works best for your workflow
 2. **Use HTML comments in Obsidian** - They're invisible in preview mode
-3. **Use `\newpage` for LaTeX documents** - Familiar to academic users
-4. **Use `---` for quick drafts** - Fast to type, but be aware it converts ALL horizontal rules
+3. **Use `\newpage` for LaTeX documents** - Familiar to academic users and explicit
+4. **Horizontal rules are for visual separation** - Use `---` for styling, not page breaks
 
-## Migration from Previous Version
+## Important Changes
 
-If you were using the previous version that converted ALL `---` to page breaks:
+**Horizontal rules (`---`, `***`, `___`) are NOT converted to page breaks.**
 
-- **No changes needed** - It still works the same way
-- **But now safer** - Code blocks and YAML frontmatter are protected
-- **More options** - You can now use HTML comments or `\newpage` too
+If you have documents that relied on `---` for page breaks, update them to use:
+- `\newpage` - LaTeX-style page break
+- `<!-- pagebreak -->` - HTML comment-style page break
 
-## Advanced: Code-Block Detection
+## Advanced: Code-Block Protection
 
-The converter tracks:
+The converter protects special content from page break conversion:
 
 - Fenced code blocks with ` ``` ` or `~~~`
-- YAML frontmatter (only the first `---...---` block at document start)
-- Nested structures
+- YAML frontmatter (the first `---...---` block at document start)
 
-This ensures page break detection is **context-aware** and won't interfere with your code examples or metadata.
+This ensures `\newpage` and `<!-- pagebreak -->` markers inside code blocks are treated as literal text, not page break commands.
 
 ---
 

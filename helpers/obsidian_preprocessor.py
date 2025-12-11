@@ -287,28 +287,31 @@ def _format_callout(callout_type: str, title: str, content: List[str]) -> List[s
 
 
 def fix_consecutive_bold_lines(content: str) -> str:
-    """Add line breaks between consecutive bold label lines
+    """Add line breaks between consecutive bold lines
 
-    Fixes issue where lines like:
-    **Label:** text
-    **Label:** text
+    Fixes issue where consecutive lines starting with bold text
+    run together in PDF output. Adds explicit line breaks.
 
-    Run together in PDF output. Adds explicit line breaks.
+    Examples:
+    - **Label:** text
+    - **En tant que** text
+    - **Bold only**
     """
     lines = content.split('\n')
     result = []
-    prev_was_bold_label = False
+    prev_was_bold_start = False
 
     for line in lines:
-        # Check if line starts with **text:** pattern (bold label)
-        is_bold_label = re.match(r'^\*\*.+:\*\*\s+', line)
+        # Check if line starts with **text** pattern (any bold text at start)
+        # Matches: **anything** (with or without text after)
+        is_bold_start = re.match(r'^\*\*.+?\*\*', line)
 
-        if is_bold_label and prev_was_bold_label:
+        if is_bold_start and prev_was_bold_start:
             # Add explicit line break before this line
             result.append('\\')
 
         result.append(line)
-        prev_was_bold_label = bool(is_bold_label)
+        prev_was_bold_start = bool(is_bold_start)
 
     return '\n'.join(result)
 

@@ -6,33 +6,35 @@ This file will contain different exemples of formatting, just to see whether the
 
 ## Lists
 
- - List
- - List
-   - Embed
+* List
+* List
+  * Embeded
 
-1. List 
+1. List
 2. List
-	1. Embed
+	1. Embeded
 
 ---
+
 ## Checkboxes
 
-- [ ] Tick box
-- [x] Ticked box
-    - [ ] Embed me please
-    - [x]  Oh yeah
-        - [ ] Testing
-        - [x]  PLop
-            - [ ] Testing
+* [ ] Tick box
+* [x] Ticked box
+  * [ ] Embeded Level 1 Tick box
+  * [x]  Embeded Level 1 Ticked box
+    * [ ] Embeded Level 2 Tick box
+    * [x] Embeded Level 2 Ticked box
+      * [ ] Embeded Level 3 Tick box
 
 ---
 
 ## Normal text
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultrices commodo metus, non hendrerit metus ornare nec. Praesent ut quam lacus. Curabitur lacus augue, malesuada mollis purus sed, efficitur convallis dui. Cras quam ligula, tincidunt aliquet est vitae, venenatis cursus nisl. Integer laoreet sit amet nulla in feugiat. Integer porttitor tincidunt nisl eu auctor. Nulla vitae odio sed diam elementum tempor ut vitae dolor. Sed vestibulum consectetur augue non euismod.
+Some will contain formatting.
+
+Lorem ipsum dolor sit amet, *consectetur adipiscing elit.* In **ultrices commodo metus**, non hendrerit metus ornare nec. ==Praesent ut quam lacus==. Curabitur lacus augue, ***malesuada mollis*** purus sed, efficitur convallis dui. Cras quam ligula, tincidunt aliquet est vitae, venenatis cursus nisl. Integer laoreet sit amet nulla in feugiat. Integer porttitor tincidunt nisl eu auctor. Nulla vitae odio sed diam elementum tempor ut vitae dolor. Sed vestibulum consectetur augue non euismod.
 
 ---
-
 
 ## Code Block
 
@@ -43,7 +45,6 @@ Vestibulum faucibus sapien lacus, vel elementum quam tempor at. Nulla facilisi. 
 ```
 
 ---
-
 
 ## Callout block
 
@@ -69,7 +70,7 @@ Vestibulum faucibus sapien lacus, vel elementum quam tempor at. Nulla facilisi. 
 
 ## Mermaid Diagram
 
-```mermaid 
+```mermaid
 stateDiagram
     [*] --> Still
     Still --> [*]
@@ -84,8 +85,8 @@ stateDiagram
 
 ## Latex Math
 
-This is an inline math expression $e^{2i\pi} = 1$. 
-It is used with a single $ sign, exemples : $x = 3$ , $a^2 + b^2 = a^2 + ab + b^2$
+This is an inline math expression $e^{2i\pi} = 1$.
+It is used with a single \$ sign, exemples: $x = 3$ , $a^2 + b^2 = a^2 + ab + b^2$
 
 $$\int_{a}^b\int_{c}^d f(x,y)dxdy$$
 

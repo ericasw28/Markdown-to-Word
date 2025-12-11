@@ -63,7 +63,8 @@ def is_page_break_marker(line: str) -> bool:
     Supports:
     1. HTML comments: <!-- pagebreak -->, <!-- page-break -->, <!-- newpage -->
     2. Raw LaTeX: \\newpage
-    3. Horizontal rules: ---, ***, ___
+
+    Note: Horizontal rules (---, ***, ___) are NOT treated as page breaks.
 
     Args:
         line: Line to check
@@ -79,10 +80,6 @@ def is_page_break_marker(line: str) -> bool:
 
     # Check for raw LaTeX \newpage
     if re.match(r'^\\newpage\s*$', stripped):
-        return True
-
-    # Check for horizontal rules (only if truly standalone)
-    if re.match(r'^[-*_]{3,}$', stripped) and stripped == line.strip():
         return True
 
     return False
