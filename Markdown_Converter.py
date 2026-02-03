@@ -101,7 +101,7 @@ if uploaded_files:
                     )
                     custom_variables['author'] = st.text_input(
                         "Author",
-                        value=template_manager.get_default_variables().get('author', ''),
+                        value='Eric TAYLOR',
                         help="Author name (leave empty if not needed)"
                     )
                     custom_variables['subtitle'] = st.text_input(

@@ -261,21 +261,24 @@ def fix_list_blank_lines(content: str) -> str:
     return '\n'.join(result)
 
 
-def preprocess_obsidian_for_html(content: str) -> str:
+def preprocess_obsidian_for_html(content: str, optimize_tables: bool = False) -> str:
     """Main preprocessing function for HTML/DOCX output
 
     Converts Obsidian syntax to HTML-friendly Markdown (not LaTeX).
 
     Args:
         content: Raw markdown content with Obsidian syntax
+        optimize_tables: If True, convert tables to LaTeX (for PDF).
+                        If False, keep as markdown tables (for DOCX/HTML)
 
     Returns:
         Preprocessed markdown content compatible with HTML converters
     """
     # Order matters! Process in this sequence:
 
-    # 0. Optimize table column widths
-    content = optimize_table_widths(content)
+    # 0. Optimize table column widths (skip for DOCX to keep HTML tables)
+    if optimize_tables:
+        content = optimize_table_widths(content)
 
     # 1. Fix consecutive bold lines first (before other processing)
     content = fix_consecutive_bold_lines(content)
