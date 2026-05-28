@@ -91,9 +91,17 @@ CHECKBOX_TYPES = {
 
     # Other
     'L': ('[ ]', '📍'),  # Location
+    'l': ('[ ]', '📍'),  # Location (lowercase alias)
     'r': ('[x]', '🏆'),  # Reward
     'c': ('[ ]', '🔀'),  # Choice
     'H': ('[x]', '❤️'),  # Favorite / Health
+    '<': ('[ ]', '📅'),  # Scheduled
+    '*': ('[ ]', '⭐'),  # Favorite / Star
+    'n': ('[ ]', '📝'),  # Note (lowercase alias)
+    'S': ('[ ]', '💾'),  # Saved
+    'k': ('[ ]', '🔑'),  # Key
+    'w': ('[x]', '🏆'),  # Win / Victory
+    'u': ('[ ]', '⬆️'),  # Up
 }
 
 
@@ -127,8 +135,10 @@ def convert_wikilinks(content: str) -> str:
     content = re.sub(r'!\[\[([^\]]+?)#([^\]]+?)\]\]', r'', content)
 
     # Convert regular wikilinks to plain text
-    # (could be enhanced to actual links if we had a mapping)
-    content = re.sub(r'\[\[([^\]|]+?)(?:\|([^\]]+))?\]\]', r'\2' if r'\2' else r'\1', content)
+    # Use alias if present (group 2), otherwise use page name (group 1)
+    def _wikilink_replace(m):
+        return m.group(2) if m.group(2) else m.group(1)
+    content = re.sub(r'\[\[([^\]|]+?)(?:\|([^\]]+))?\]\]', _wikilink_replace, content)
     return content
 
 
@@ -507,20 +517,40 @@ def get_enhanced_latex_header(use_lualatex=False) -> str:
 \usepackage{enumitem}      % For better list control
 \usepackage{fontspec}      % For font configuration
 \usepackage{ulem}          % For underline support
+\normalem                   % Restore \emph to italic (ulem changes it to underline)
 
-% Configure fallback font for emoji support
+% Configure fallback fonts for symbol and emoji support
+% Order matters: text/symbol fonts first, then emoji font last
+% This prevents emoji rendering of text symbols like arrows (→) and math (∀)
 \directlua{
   luaotfload.add_fallback("emojifallback", {
+    "Arial Unicode MS:mode=node",
+    "Apple Symbols:mode=node",
     "Apple Color Emoji:mode=harf"
   })
 }
 
-% Set main font with emoji fallback
-\setmainfont{Helvetica Neue}[RawFeature={fallback=emojifallback}]
+% Set main font: Lato with Arial + emoji fallback chain
+\setmainfont{Lato}[
+  BoldFont={Lato Bold},
+  ItalicFont={Lato Italic},
+  BoldItalicFont={Lato Bold Italic},
+  RawFeature={fallback=emojifallback}
+]
 
-% Use default monospace font for better line breaking in code blocks
-% Custom fonts can interfere with fvextra's character width calculations
-\setmonofont{Latin Modern Mono}[Scale=0.9]
+% Sans-serif font (for headings if needed)
+\setsansfont{Lato}[
+  BoldFont={Lato Bold},
+  ItalicFont={Lato Italic},
+  BoldItalicFont={Lato Bold Italic},
+  RawFeature={fallback=emojifallback}
+]
+
+% Monospace font: Fira Code for code blocks (variable font)
+\setmonofont{Fira Code}[
+  Scale=0.85,
+  RawFeature={fallback=emojifallback}
+]
 
 % Define custom highlight command using colorbox (replacement for soul's \hl)
 \definecolor{highlightyellow}{RGB}{255, 255, 0}
