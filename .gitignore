@@ -183,3 +183,6 @@ Thumbs.db
 
 # Node modules (if any)
 node_modules/
+
+# Sorties des tests de charge
+tests/*.pdf
