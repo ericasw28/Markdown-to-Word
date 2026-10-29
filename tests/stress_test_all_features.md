@@ -3,6 +3,7 @@ title: "Stress Test - Toutes les fonctionnalités Markdown"
 author: "Test Automatique"
 company: "Infogene"
 date: "2026-02-16"
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
 ---
 
 # Stress Test : Toutes les fonctionnalités Markdown
@@ -828,3 +829,15 @@ Ce document de stress test contient **toutes les fonctionnalités Markdown** cou
 ---
 
 *Fin du document de stress test* 🏁
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [test](../jupyter_tests/test.md) — Test Jupyter complémentaire pour la conversion Markdown vers Word.
+- [test_simple](Archived%20Tests/test_simple.md) — Autre test de rendu Markdown vers Word archivé dans le même projet.
+- [QUICK_TEST_GUIDE](../Documentation/QUICK_TEST_GUIDE.md) — Guide de test rapide et de dépannage de l'application Markdown to Word.
+<!-- hub-related:end -->

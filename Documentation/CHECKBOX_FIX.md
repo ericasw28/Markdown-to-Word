@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Checkbox Improvements - Now with Emojis! 🎉
 
 ## Current Status: ✅ FULL EMOJI SUPPORT
@@ -166,3 +169,14 @@
 ---
 
 Your checkboxes are now beautiful, modern, and production-ready! ✨🚀
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [FAILING_FEATURES_REPORT](../tests/FAILING_FEATURES_REPORT.md) — Même projet : rapport des bugs de conversion Markdown vers Word.
+- [test_simple](../tests/Archived%20Tests/test_simple.md) — Même projet : fichier de test pour vérifier le rendu des cases à cocher.
+<!-- hub-related:end -->

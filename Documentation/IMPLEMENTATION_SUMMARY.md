@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Implementation Summary - Option 5 (Hybrid Approach)
 
 ## ✅ What We Built
@@ -205,3 +208,15 @@ The app now successfully converts Obsidian-formatted Markdown to PDF with:
 - Easy to use and extend
 
 Your prototype is ready to use with Obsidian notes! 🎉
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [Markdown to Word – Fiche projet](../../Markdown%20to%20Word%20%E2%80%93%20Fiche%20projet.md) — Fiche projet du même convertisseur, contexte global utile.
+- [MASTERPLAN](../MASTERPLAN.md) — Plan directeur du même projet de conversion Obsidian vers PDF.
+- [Obsidian Formatting](../tests/Archived%20Tests/Obsidian%20Formatting.md) — Référence des éléments Obsidian testés et supportés.
+<!-- hub-related:end -->

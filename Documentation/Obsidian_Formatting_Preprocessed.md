@@ -6,6 +6,7 @@ tags:
   - markdown
 banner: "https://photographypro.com/wp-content/uploads/2018/01/shoot-panoramic-photos-2.jpg"
 banner_y: 0.20398
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
 ---
 Back 
 
@@ -394,3 +395,15 @@ gantt
 			Gathering Data from FSE : after sql, 20d 
 ```
 
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [Obsidian Formatting](../tests/Archived%20Tests/Obsidian%20Formatting.md) — Variante de test du même projet Markdown to Word sur la même syntaxe Obsidian.
+- [O_Form](../jupyter_tests/O_Form.md) — Référentiel complémentaire des syntaxes Obsidian dans les tests Jupyter du projet.
+- [Obsidian Formatting](Documentation/How%20Tos/Points%20techniques/Obsidian%20Formatting.md) — Documentation Obsidian générale utile pour vérifier les règles Markdown et Mermaid.
+- [Mermaid - FlowCharts](Documentation/How%20Tos/Points%20techniques/Mermaid%20-%20FlowCharts.md) — Guide spécialisé Mermaid FlowCharts, directement lié à la section Flowchart de la note.
+<!-- hub-related:end -->

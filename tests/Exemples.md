@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Exemples
 
 This file will contain different exemples of formatting, just to see whether the PDF generation works correctly.
@@ -91,3 +94,15 @@ It is used with a single \$ sign, exemples: $x = 3$ , $a^2 + b^2 = a^2 + ab + b^
 $$\int_{a}^b\int_{c}^d f(x,y)dxdy$$
 
 ---
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [QUICK_TEST_GUIDE](../Documentation/QUICK_TEST_GUIDE.md) — Guide de test PDF du même projet Streamlit, chemin correspondant à la note.
+- [Callout Tests](Archived%20Tests/Callout%20Tests.md) — Casse du bloc callout présent dans la note, même projet et dossier de tests.
+- [test_simple](Archived%20Tests/test_simple.md) — Test de rendu Markdown proche, même dossier tests du projet Markdown to Word.
+<!-- hub-related:end -->

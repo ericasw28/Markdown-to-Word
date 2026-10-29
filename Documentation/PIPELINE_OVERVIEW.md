@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Markdown to DOCX/PDF Converter - Complete Architecture Overview
 
 ## Project Summary
@@ -366,3 +369,7 @@ This is a fully-featured, production-ready Markdown converter with:
 - ✅ Well-documented codebase
 
 The system successfully converts complex Markdown documents to professional DOCX and PDF formats with minimal user intervention.
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+<!-- hub-related:end -->

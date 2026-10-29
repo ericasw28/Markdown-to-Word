@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Setup Instructions for Option 5 (Hybrid Approach)
 
 ## Step 1: Install LaTeX Packages
@@ -60,3 +63,13 @@ After LaTeX packages are installed, we'll:
 - 🔄 Extended checkbox support
 - ✅ Mermaid diagrams (already working)
 - ✅ LaTeX math (already supported by Pandoc)
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [Markdown to Word – Fiche projet](../../Markdown%20to%20Word%20%E2%80%93%20Fiche%20projet.md) — Fiche projet du convertisseur Markdown vers Word/PDF.
+<!-- hub-related:end -->

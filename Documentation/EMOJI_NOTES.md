@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Emoji Support - FULLY WORKING! ✅
 
 ## Current Status: ✅ FULL EMOJI SUPPORT
@@ -114,3 +117,14 @@ Would need to use "Segoe UI Emoji":
 ✨ **Professional quality** maintained
 
 The implementation is complete and fully functional!
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [LOGO_SETUP](../LOGO_SETUP.md) — Même projet : intégration d'images SVG/PNG dans la chaîne PDF LaTeX.
+- [README](../../../30%20-%20API%20PDF-Gen/README.md) — Même domaine : conversion Markdown vers PDF/DOCX via API FastAPI.
+<!-- hub-related:end -->

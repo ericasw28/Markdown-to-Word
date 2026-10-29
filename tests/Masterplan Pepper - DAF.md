@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Masterplan Jarvis - Dossier d'Architecture Fonctionnelle
 
 **Date:** 2025-12-03  
@@ -791,3 +794,16 @@ graph TB
 - ISO 27001 : Audit trail, chiffrement, gestion permissions
 - Accessibilité WCAG 2.1 : Interface web conforme niveau AA
 
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [Masterplan Pepper - DAF](../../../../01%20-%20AI%20Route%202026/00%20Projects/10%20-%20PEPPER/Documentation/Basics/Masterplan%20Pepper%20-%20DAF.md) — Version parallèle du même DAF PEPPER, utile pour comparer architecture et périmètre.
+- [Masterplan Pepper - Outline](Documentation/AI%20Projects/Projets/PEPPER/Masterplan%20Pepper%20-%20Outline.md) — Plan d’ensemble du projet PEPPER, complète le dossier d’architecture fonctionnelle.
+- [00 - Contexte et Référentiel PEPPER](../../../../01%20-%20AI%20Route%202026/00%20Projects/10%20-%20PEPPER/Documentation/User%20Stories/00%20-%20Contexte%20et%20R%C3%A9f%C3%A9rentiel%20PEPPER.md) — Contexte et référentiel des données PEPPER, indispensables pour l’ingestion documentaire.
+- [US-COM-001 - Recherche Expériences pour AO](../../../../01%20-%20AI%20Route%202026/00%20Projects/10%20-%20PEPPER/Gestion%20de%20Projet/Dossiers%20Entretiens%20Personas/08%20-%20Manager%20BU/02%20-%20User%20Stories/US-COM-001%20-%20Recherche%20Exp%C3%A9riences%20pour%20AO.md) — User story clé sur la recherche d’expériences pour les AO, fonction centrale du système.
+- [User Stories PEPPER](../../../../01%20-%20AI%20Route%202026/00%20Projects/10%20-%20PEPPER/Documentation/Basics/User%20Stories%20PEPPER.md) — Spécifications des user stories PEPPER, suite logique détaillée du DAF.
+<!-- hub-related:end -->

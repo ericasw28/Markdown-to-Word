@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Mermaid Diagram Rendering Setup
 
 This guide will help you set up Mermaid diagram rendering for the Markdown converter.
@@ -103,3 +106,14 @@ If you don't need Mermaid support or encounter issues, the app will gracefully f
 - [Mermaid Documentation](https://mermaid.js.org/)
 - [Mermaid CLI GitHub](https://github.com/mermaid-js/mermaid-cli)
 - [Live Editor](https://mermaid.live)
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [sample_diagrams](../../Markdown_Jodit/sample_diagrams.md) — Exemples de syntaxe Mermaid/Markdown utiles pour tester le rendu.
+- [README](../../../30%20-%20API%20PDF-Gen/README.md) — Conversion Markdown vers PDF/DOCX, même objectif de pipeline.
+<!-- hub-related:end -->

@@ -6,6 +6,7 @@ tags:
   - markdown
 banner: "https://photographypro.com/wp-content/uploads/2018/01/shoot-panoramic-photos-2.jpg"
 banner_y: 0.20398
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
 ---
 Back [[Expediting - Home]]
 
@@ -352,3 +353,14 @@ gantt
 			Gathering Data from FSE : after sql, 20d 
 ```
 
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [Obsidian_Formatting_Preprocessed](../../Documentation/Obsidian_Formatting_Preprocessed.md) — Même projet et même référence de formatage Obsidian/Mermaid, très proche du test.
+- [O_Form](../../jupyter_tests/O_Form.md) — Même projet et référentiel Obsidian/Mermaid utile pour valider les formats.
+- [Obsidian Formatting](Documentation/How%20Tos/Points%20techniques/Obsidian%20Formatting.md) — Guide Obsidian de même sujet, utile comme référence de syntaxe.
+<!-- hub-related:end -->

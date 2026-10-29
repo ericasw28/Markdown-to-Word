@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Page Break Guide
 
 This document explains how to insert page breaks in your Markdown documents for conversion to PDF and DOCX formats.
@@ -171,3 +174,14 @@ This ensures `\newpage` and `<!-- pagebreak -->` markers inside code blocks are 
 ---
 
 **Questions?** Check the main documentation or raise an issue on GitHub.
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [Markdown to Word – Fiche projet](../Markdown%20to%20Word%20%E2%80%93%20Fiche%20projet.md) — Fiche projet du même convertisseur Markdown vers Word/PDF.
+- [IMPLEMENTATION_SUMMARY](Documentation/IMPLEMENTATION_SUMMARY.md) — Implémentation de la conversion Obsidian vers PDF via LaTeX.
+<!-- hub-related:end -->

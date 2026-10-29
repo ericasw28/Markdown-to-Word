@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Logo Setup Instructions
 
 ## Issue: SVG Logos Not Supported in LaTeX
@@ -53,3 +56,15 @@ Optionally update [config/header_footer_template.json](config/header_footer_temp
 ```
 
 Once you have `config/logo.png`, the logo will appear in your PDFs automatically!
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [EMOJI_NOTES](Documentation/EMOJI_NOTES.md) — Même projet : limitations LaTeX/PDF liées à la génération.
+- [SETUP_INSTRUCTIONS](Documentation/SETUP_INSTRUCTIONS.md) — Même projet : installation LaTeX nécessaire pour PDF.
+- [IMPLEMENTATION_SUMMARY](Documentation/IMPLEMENTATION_SUMMARY.md) — Même projet : résumé de conversion Markdown vers PDF.
+<!-- hub-related:end -->

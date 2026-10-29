@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Markdown Converter - Summary of Changes
 
 **Date:** 2025-12-05
@@ -117,3 +120,14 @@ Content on page 2
 ---
 
 **All changes tested and verified!** 🎉
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [FAILING_FEATURES_REPORT](tests/FAILING_FEATURES_REPORT.md) — Rapport des défauts restants dans la conversion vers Word/PDF.
+- [IMPLEMENTATION_SUMMARY](Documentation/IMPLEMENTATION_SUMMARY.md) — Contexte LaTeX et Obsidian utile pour comprendre les fixes PDF.
+<!-- hub-related:end -->

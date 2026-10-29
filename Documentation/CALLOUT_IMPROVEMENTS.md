@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Callout Box Improvements - Complete! 🎉
 
 ## What We Fixed
@@ -129,3 +132,14 @@ Colors match Obsidian's design:
 | `> [!example]` | Purple | EXAMPLE |
 
 Your callout boxes are now production-ready! 🚀
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [Obsidian Formatting](../tests/Archived%20Tests/Obsidian%20Formatting.md) — Référence des tests de formatage Obsidian (callouts) pour la version 64 du projet.
+- [O_Form](../jupyter_tests/O_Form.md) — Référentiel de syntaxe de formatage Obsidian pour la version 64 du projet.
+<!-- hub-related:end -->

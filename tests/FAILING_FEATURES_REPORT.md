@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Markdown to Word Conversion - Failing Features Report
 
 **Generated:** December 11, 2025
@@ -235,3 +238,15 @@ The test converted the full `Exemples.md` file and found:
 4. Fix code blocks second (HIGH priority)
 5. Add blockquote support (MEDIUM priority)
 6. Consider LaTeX math support (LOW priority)
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [Markdown to Word – Fiche projet](../../Markdown%20to%20Word%20%E2%80%93%20Fiche%20projet.md) — Fiche projet du convertisseur Markdown vers Word/PDF avec support de la syntaxe Obsidian.
+- [CHANGES_SUMMARY](../CHANGES_SUMMARY.md) — Récapitulatif des corrections du convertisseur, suite logique du rapport de bogues.
+- [test](../jupyter_tests/test.md) — Fichier de test Markdown to Word du même projet, utile pour reproductibilité.
+<!-- hub-related:end -->

@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Quick Test Guide
 
 ## Test the Streamlit App
@@ -119,3 +122,13 @@ All Obsidian features are now supported:
 - Math
 - Mermaid
 - And more!
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [Markdown to Word – Fiche projet](../../Markdown%20to%20Word%20%E2%80%93%20Fiche%20projet.md) — Fiche projet du même convertisseur Markdown/Word/PDF.
+<!-- hub-related:end -->

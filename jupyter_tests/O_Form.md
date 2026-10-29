@@ -6,6 +6,7 @@ tags:
   - markdown
 banner: "https://photographypro.com/wp-content/uploads/2018/01/shoot-panoramic-photos-2.jpg"
 banner_y: 0.20398
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
 ---
 Back [[Expediting - Home]]
 
@@ -352,3 +353,15 @@ gantt
 			Gathering Data from FSE : after sql, 20d 
 ```
 
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [Obsidian_Formatting_Preprocessed](../Documentation/Obsidian_Formatting_Preprocessed.md) — Même projet et même référentiel de formatage Obsidian/Mermaid.
+- [Obsidian Formatting](Documentation/How%20Tos/Points%20techniques/Obsidian%20Formatting.md) — Guide syntaxique Obsidian/Mermaid directement exploitable.
+- [Mermaid - FlowCharts](Documentation/How%20Tos/Points%20techniques/Mermaid%20-%20FlowCharts.md) — Approfondissement utile sur les diagrammes de flux Mermaid.
+- [Markdown to Word – Fiche projet](../../Markdown%20to%20Word%20%E2%80%93%20Fiche%20projet.md) — Fiche projet du convertisseur, contexte utile autour de la note.
+<!-- hub-related:end -->

@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 
 # Test Document
 
@@ -50,3 +53,7 @@ graph TD
 [GitHub](https://github.com)
 
 **Bold text** and *italic text* and ~~strikethrough~~
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+<!-- hub-related:end -->

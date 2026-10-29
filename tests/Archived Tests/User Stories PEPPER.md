@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # User Stories PEPPER - Détails
 
 **Date:** 2025-12-03
@@ -650,3 +653,17 @@ Pour toute nouvelle User Story, utiliser ce template :
 **Document maintenu par:** Équipe PEPPER
 **Revue:** Mensuelle
 **Prochaine révision:** 2025-02-01
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [Masterplan Pepper - DAF](../../../../../01%20-%20AI%20Route%202026/00%20Projects/10%20-%20PEPPER/Documentation/Basics/Masterplan%20Pepper%20-%20DAF.md) — Document lié, référentiel de base pour le périmètre PEPPER et le pilotage.
+- [00 - Contexte et Référentiel PEPPER](../../../../../01%20-%20AI%20Route%202026/00%20Projects/10%20-%20PEPPER/Documentation/User%20Stories/00%20-%20Contexte%20et%20R%C3%A9f%C3%A9rentiel%20PEPPER.md) — Contexte, référentiel données et priorisation qui éclairent les user stories.
+- [Personas PEPPER - Cartographie et Contacts](../../../../../01%20-%20AI%20Route%202026/00%20Projects/10%20-%20PEPPER/Gestion%20de%20Projet/Personas%20PEPPER%20-%20Cartographie%20et%20Contacts.md) — Cartographie des personas et contacts pour valider les user stories.
+- [Checklist Validation US](../../../../../01%20-%20AI%20Route%202026/00%20Projects/10%20-%20PEPPER/Gestion%20de%20Projet/Checklist%20Validation%20US.md) — Checklist de validation des user stories par phase, utile au suivi.
+- [Suivi Projet PEPPER](../../../../../01%20-%20AI%20Route%202026/00%20Projects/10%20-%20PEPPER/Gestion%20de%20Projet/Suivi%20Projet%20PEPPER.md) — Suivi projet et planification des ateliers de validation des user stories.
+<!-- hub-related:end -->

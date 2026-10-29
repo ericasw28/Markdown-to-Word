@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Markdown to PDF Converter - Masterplan
 
 **Project:** Obsidian-Compatible Markdown to PDF Converter
@@ -1139,3 +1142,15 @@ timeline
 **Document Version:** 2.0 (with Mermaid diagrams)
 **Last Updated:** 2025-12-02
 **Next Review:** After P1 completion
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [Markdown to Word – Fiche projet](../Markdown%20to%20Word%20%E2%80%93%20Fiche%20projet.md) — Fiche projet du même dossier Markdown to Word avec support Obsidian.
+- [IMPLEMENTATION_SUMMARY](Documentation/IMPLEMENTATION_SUMMARY.md) — Résumé d’implémentation directement lié au pipeline Markdown Obsidian→PDF.
+- [pass1_debug](../../../01%20-%20AI%20Route%202026/00%20Projects/11%20-%20AI%20Meeting%20Notes/20%20-%20Garage/meeting_notes/data/20260227_162629_Appel_avec_Charles_Guillaume_VIARD_vtt/pass1_debug.md) — Note de réunion sur l’architecture MCP et la conversion Markdown-PDF.
+<!-- hub-related:end -->

@@ -1,3 +1,6 @@
+---
+up: "[[Dev/20 - Garage/64 - Streamlit/Markdown to Word/Markdown to Word|Markdown to Word]]"  # hub
+---
 # Test Document
 
 ## Text Formatting
@@ -88,3 +91,15 @@ graph LR
 ## Image Test
 
 ![https://static.iquesta.com/logo/iquesta/company/logo/10885.webp]
+
+<!-- hub-related:start -->
+⬆ [Markdown to Word](../../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [stress_test_all_features](../stress_test_all_features.md) — Test exhaustif du même convertisseur Markdown vers Word.
+- [Markdown to Word – Fiche projet](../../../Markdown%20to%20Word%20%E2%80%93%20Fiche%20projet.md) — Fiche projet de référence pour le convertisseur Markdown.
+- [test](../../jupyter_tests/test.md) — Autre test de rendu Word utile dans le même projet.
+<!-- hub-related:end -->
