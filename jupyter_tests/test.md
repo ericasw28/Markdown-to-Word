@@ -56,4 +56,14 @@ graph TD
 
 <!-- hub-related:start -->
 ⬆ [Markdown to Word](../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [test_simple](../tests/Archived%20Tests/test_simple.md) — Test Markdown vers Word couvrant listes, cases, maths et diagrammes.
+- [FAILING_FEATURES_REPORT](../tests/FAILING_FEATURES_REPORT.md) — Rapport des fonctionnalités Markdown non converties correctement en Word.
+- [stress_test_all_features](../tests/stress_test_all_features.md) — Test exhaustif du rendu Markdown vers Word, complémentaire de la note.
+- [PIPELINE_OVERVIEW](../Documentation/PIPELINE_OVERVIEW.md) — Vue d'ensemble de l'architecture de l'application Streamlit convertissant Markdown en DOCX et PDF avec gestion des diagrammes Mermaid.
+- [QUICK_TEST_GUIDE](../Documentation/QUICK_TEST_GUIDE.md) — Guide de test rapide et de dépannage pour l'application Streamlit de conversion Markdown vers PDF.
 <!-- hub-related:end -->

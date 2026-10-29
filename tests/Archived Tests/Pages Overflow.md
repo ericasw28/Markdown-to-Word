@@ -25,4 +25,11 @@ Quisque nec risus sed est dignissim elementum. Vivamus eget rhoncus turpis. Ut c
 
 <!-- hub-related:start -->
 ⬆ [Markdown to Word](../../Markdown%20to%20Word.md)
+
+## Voir aussi
+
+_Liens générés par `hub-related` (GLaDOS), entre ces balises._
+
+- [test](../../jupyter_tests/test.md) — Test Word du même projet pour vérifier la conversion Markdown.
+- [stress_test_all_features](../stress_test_all_features.md) — Test exhaustif de la conversion Markdown vers Word, proche sujet.
 <!-- hub-related:end -->

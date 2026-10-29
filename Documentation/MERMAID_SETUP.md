@@ -114,6 +114,5 @@ If you don't need Mermaid support or encounter issues, the app will gracefully f
 
 _Liens générés par `hub-related` (GLaDOS), entre ces balises._
 
-- [sample_diagrams](../../Markdown_Jodit/sample_diagrams.md) — Exemples de syntaxe Mermaid/Markdown utiles pour tester le rendu.
 - [README](../../../30%20-%20API%20PDF-Gen/README.md) — Conversion Markdown vers PDF/DOCX, même objectif de pipeline.
 <!-- hub-related:end -->
